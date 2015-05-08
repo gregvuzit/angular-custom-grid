@@ -209,8 +209,10 @@ angular.module('angular-custom-grid')
     var buildContentItem = function(item, columnDef, scope) {
       var result = '<div class="col-xs-' + columnDef.colLength;
       if (angular.isDefined(columnDef.colClass)) {
-        // Value could be function or string, so run it through $eval
-        result += ' ' + scope.$eval(columnDef.colClass);
+        // Value could be function or string, so run it through $eval if former
+        var classVal = (columnDef.colClass.indexOf('getProvidedScope') !== -1) ? 
+                          scope.$eval(columnDef.colClass) : columnDef.colClass;
+        result += ' ' + classVal;
       }
       result += '">';
 
